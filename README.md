@@ -12,7 +12,7 @@
 <div align="center">
 
 [![Github](https://img.shields.io/badge/DeepScaleR-000000?style=for-the-badge&logo=github&logoColor=000&logoColor=white)](https://github.com/agentica-project/deepscaler)
-[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://www.notion.so/DeepScaleR-Scaling-R1-Models-with-Reinforcement-Learning-1891e65ddc7f80ad8cc6dbe0069a66fa?pvs=4) 
+[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://pretty-radio-b75.notion.site/DeepScaleR-Surpassing-O1-Preview-with-a-1-5B-Model-by-Scaling-RL-19681902c1468005bed8ca303013a4e2) 
 [![Twitter](https://img.shields.io/badge/Agentica-white?style=for-the-badge&logo=X&logoColor=000&color=000&labelColor=white)](https://x.com/Agentica_)
 [![Hugging Face Collection](https://img.shields.io/badge/Agentica-fcd022?style=for-the-badge&logo=huggingface&logoColor=000&labelColor)](https://huggingface.co/agentica-org)
 
@@ -32,12 +32,13 @@ DeepScaleR is an open-source project to fully democratize reinforcement learning
 
 ## Releases  📰
 
-<strong>[2025/02/10]</strong> We release `DeepScaleR-1.5B-Preview`, a 1.5B model that surpasses O1-Preview with a 1.5B model and achieves <strong>43.1% Pass@1</strong> on AIME. We achieve this by iteratively scaling Deepseek's GRPO algorithm from 8K→16K->24K context length for thinking. As part of this release, we open-source:
+<strong>[2025/02/10]</strong> We release `DeepScaleR-1.5B-Preview`, a 1.5B model that surpasses O1-Preview and achieves <strong>43.1% Pass@1</strong> on AIME. We achieve this by iteratively scaling Deepseek's GRPO algorithm from 8K→16K->24K context length for thinking. As part of this release, we open-source:
 - 🍗 An In-Depth Blog Post on our [Training Recipe and Insights](https://www.notion.so/DeepScaleR-Surpassing-O1-Preview-with-a-1-5B-Model-by-Scaling-RL-1891e65ddc7f80ad8cc6dbe0069a66fa)
 - 🤗 HF Model [`DeepScaleR-1.5B-Preview`](https://huggingface.co/agentica-org/DeepScaleR-1.5B-Preview)
 - 🤗 HF Dataset [`DeepScaleR-Preview-Dataset`](https://huggingface.co/datasets/agentica-org/DeepScaleR-Preview-Dataset) / 🗂️  [JSON Dataset](https://github.com/agentica-project/deepscaler/tree/main/deepscaler/data)
 - 📄 [Training Scripts](https://github.com/agentica-project/deepscaler/tree/main/scripts/train)—Exact hyperparameters we used to achieve 43.1% on AIME.
 - 📈 [Wandb Training Logs](https://wandb.ai/mluo/deepscaler-1.5b)—All training runs and ablations.
+  - Due to Wandb migration bugs, the 8k training run is compressed to 400-500 steps. The data is identical, but our original run was 1600 steps.
 - 🔎 [Evaluation Logs](https://drive.google.com/file/d/1V_rYKoL35WmubbmWN6PeFg4zo5QOug8X/view?pli=1)—DeepScaleR, Deepseek Distill, and Still 1.5B generations over 1000+ math problems.
 
 
@@ -51,7 +52,7 @@ pip install -e .
 ```
 
 ### Data
-Our raw training data in `deepscaler/data/[train|test]`, along with preprocessing scripts. To convert to raw data into Parquet files for training, run:
+Our raw training data in `deepscaler/data/[train|test]`, along with preprocessing scripts. To convert the raw data into Parquet files for training, run:
 ```python
 # Output parquet files in data/*.parquet.
 python scripts/data/deepscaler_dataset.py
@@ -100,11 +101,10 @@ We welcome the community to try out different models, context legnths, and RL pa
 
 ### Ablations
 
-Finally, we provide ablations for the 2k/4k context runs in `scripts/ablation/`. Run:
+Finally, we provide ablations for the 2k/4k context runs in `scripts/ablation/`. To run:
 ```bash
 ./scripts/ablation/run_deepscaler_1.5B_[2k|4k].sh
 ```
-
 
 ## Evaluation
 
