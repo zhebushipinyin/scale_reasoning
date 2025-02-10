@@ -33,7 +33,7 @@ DeepScaleR is an open-source project to fully democratize reinforcement learning
 ## Releases  📰
 
 <strong>[2025/02/10]</strong> We release `DeepScaleR-1.5B-Preview`, a 1.5B model that surpasses O1-Preview with a 1.5B model and achieves <strong>43.1% Pass@1</strong> on AIME. We achieve this by iteratively scaling Deepseek's GRPO algorithm from 8K→16K->24K context length for thinking. As part of this release, we open-source:
-- 🍗 An In-Depth Blog Post on our [Training Recipe and Insights](https://www.notion.so/DeepScaleR-Scaling-R1-Models-with-Reinforcement-Learning-1891e65ddc7f80ad8cc6dbe0069a66fa?pvs=4)
+- 🍗 An In-Depth Blog Post on our [Training Recipe and Insights](https://www.notion.so/DeepScaleR-Surpassing-O1-Preview-with-a-1-5B-Model-by-Scaling-RL-1891e65ddc7f80ad8cc6dbe0069a66fa)
 - 🤗 HF Model [`DeepScaleR-1.5B-Preview`](https://huggingface.co/agentica-org/DeepScaleR-1.5B-Preview)
 - 🤗 HF Dataset [`DeepScaleR-Preview-Dataset`](https://huggingface.co/datasets/agentica-org/DeepScaleR-Preview-Dataset) / 🗂️  [JSON Dataset](https://github.com/agentica-project/deepscaler/tree/main/deepscaler/data)
 - 📄 [Training Scripts](https://github.com/agentica-project/deepscaler/tree/main/scripts/train)—Exact hyperparameters we used to achieve 43.1% on AIME.
@@ -146,7 +146,7 @@ To replicate our reported numbers for `DeepScaleR-1.5B-Preview`, run:
   title={DeepScaleR: Surpassing O1-Preview with a 1.5B Model by Scaling RL},
   author={Michael Luo and Sijun Tan and Justin Wong and Xiaoxiang Shi and William Tang and Manan Roongta and Colin Cai and Jeffrey Luo and Tianjun Zhang and Erran Li and Raluca Ada Popa and Ion Stoica},
   year={2025},
-  howpublished={\url{}},
+  howpublished={\url{https://pretty-radio-b75.notion.site/DeepScaleR-Surpassing-O1-Preview-with-a-1-5B-Model-by-Scaling-RL-19681902c1468005bed8ca303013a4e2}},
   note={Notion Blog}
   year={2025}
 }
