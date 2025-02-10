@@ -103,7 +103,7 @@ We welcome the community to try out different models, context legnths, and RL pa
 
 Finally, we provide ablations for the 2k/4k context runs in `scripts/ablation/`. To run:
 ```bash
-./scripts/ablation/run_deepscaler_1.5B_[2k|4k].sh
+./scripts/ablation/run_deepscaler_1.5B_[2k|4k].sh --model [CHECKPOINT_PATH]
 ```
 
 ## Evaluation
