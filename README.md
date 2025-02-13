@@ -144,7 +144,7 @@ To replicate our reported numbers for `DeepScaleR-1.5B-Preview`, run:
 ```bibtex
 @misc{deepscaler2025,
   title={DeepScaleR: Surpassing O1-Preview with a 1.5B Model by Scaling RL},
-  author={Michael Luo and Sijun Tan and Justin Wong and Xiaoxiang Shi and William Tang and Manan Roongta and Colin Cai and Jeffrey Luo and Tianjun Zhang and Erran Li and Raluca Ada Popa and Ion Stoica},
+  author={Michael Luo and Sijun Tan and Justin Wong and Xiaoxiang Shi and William Y. Tang and Manan Roongta and Colin Cai and Jeffrey Luo and Tianjun Zhang and Li Erran Li and Raluca Ada Popa and Ion Stoica},
   year={2025},
   howpublished={\url{https://pretty-radio-b75.notion.site/DeepScaleR-Surpassing-O1-Preview-with-a-1-5B-Model-by-Scaling-RL-19681902c1468005bed8ca303013a4e2}},
   note={Notion Blog}
