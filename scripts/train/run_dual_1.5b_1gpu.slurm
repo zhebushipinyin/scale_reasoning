@@ -43,8 +43,8 @@ ray start --head
 # Train over a single node, 8 A100-80GB GPUs.
 python3 -m verl.trainer.main_ppo \
     algorithm.adv_estimator=rloo \
-    data.train_files=$HOME/deepscaler/data/train/train.parquet \
-    data.val_files=$HOME/deepscaler/data/test/test_aime.parquet \
+    data.train_files=deepscaler/data/train/train.parquet \
+    data.val_files=deepscaler/data/test/test_aime.parquet \
     data.train_batch_size=16 \
     data.val_batch_size=16 \
     data.max_prompt_length=512 \
