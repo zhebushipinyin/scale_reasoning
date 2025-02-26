@@ -1,4 +1,16 @@
 #!/bin/bash
+
+#SBATCH -J rloo_1.5B_exp
+#SBATCH --mem=64g
+#SBATCH -p DGX                    # 作业提交的分区为 DGX
+#SBATCH --nodes=1
+#SBATCH --gres=gpu:1              # 单个节点使用 1 块 GPU 卡
+#SBATCH --cpus-per-task=64
+#SBATCH -t 20:00:00
+#SBATCH -e logs/slurm-%j.err
+#SBATCH -o logs/slurm-%j.out
+#SBATCH --qos=lv0b               # 作业使用的 QoS 为 lv0b
+
 set -x
 
 # Warning: Export VLLM_ATTENTION_BACKEND on every machine before starting Ray cluster.
