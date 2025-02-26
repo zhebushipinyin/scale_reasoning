@@ -10,3 +10,6 @@ OAI_RM_MODEL = "gpt-4o-mini"
 # Reward function constants
 THOUGHT_DELIMITER_START = "<think>"
 THOUGHT_DELIMITER_END = "</think>"
+
+INTUITION_DELIMITER_START = "<intuition>"
+INTUITION_DELIMITER_END = "</intuition>"

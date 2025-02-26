@@ -13,9 +13,12 @@ class RewardConfig:
     
     # General reward constants.
     correct_reward: float = 1.0
-    incorrect_reward: float = -1.0
-    format_error_reward: float = -1.0
-    unk_error_reward: float = -1.0
+    incorrect_reward: float = 0
+
+    format_correct_reward: float = 1.0
+    format_error_reward: float = 0
+
+    unk_error_reward: float = 0
 
 
 class RewardType(Enum):
