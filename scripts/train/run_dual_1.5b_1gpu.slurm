@@ -18,6 +18,14 @@ set -x
 export VLLM_ATTENTION_BACKEND=XFORMERS
 export WANDB_KEY="6b124c177e544ba80d64d929f34866ddf7d0b7ac"
 
+echo "job is starting on `hostname`"
+
+module add slurm/BigAI/23.02.2
+module add cuda12.8/12.8
+source ~/miniconda3/bin/activate
+conda activate scale_reason
+
+
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
