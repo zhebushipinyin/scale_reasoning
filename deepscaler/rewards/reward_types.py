@@ -12,7 +12,7 @@ class RewardConfig:
     use_math_orm: bool = False
     
     # General reward constants.
-    correct_reward: float = 1.0
+    correct_reward: float = 2.0
     incorrect_reward: float = 0
 
     format_correct_reward: float = 1.0
