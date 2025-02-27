@@ -71,7 +71,8 @@ class RewardMathFn(RewardFn):
     
 
     def format_reward(self, response, **kwargs):
-        pattern =  r"^<intuition>.*?</intuition>\n<think>.*?</think>.*$"
+        #pattern =  r"^<intuition>.*?</intuition>\n<think>.*?</think>.*$"
+        pattern = r".*?</intuition>\n<think>.*?</think>.*$"
         match = re.match(pattern, response, re.DOTALL | re.MULTILINE)
         if match:
             return self.config.format_correct_reward

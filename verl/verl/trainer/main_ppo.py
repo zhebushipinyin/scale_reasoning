@@ -82,7 +82,7 @@ class RewardManager():
             
             if i == 0: 
                 question = self.tokenizer.decode(valid_prompt_ids)
-                print(f'Question: {question}\n Answer: {sequences_str}\nGround_truth: {ground_truth}\nScore: {score:.2f}\n')  
+                print(f'Question: {question}\n Answer: {sequences_str}\nGround_truth: {ground_truth}\nScore: {score:.2f}\n')
             
             # with print_lock:
             #     if data_source not in already_print_data_sources:
