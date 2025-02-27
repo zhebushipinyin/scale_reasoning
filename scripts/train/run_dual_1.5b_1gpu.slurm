@@ -17,7 +17,7 @@ set -x
 # vLLM without XFORMERS will results in CUDA errors.
 export VLLM_ATTENTION_BACKEND=XFORMERS
 export WANDB_KEY="6b124c177e544ba80d64d929f34866ddf7d0b7ac"
-
+export WANDB_API_KEY="6b124c177e544ba80d64d929f34866ddf7d0b7ac"
 echo "job is starting on `hostname`"
 
 # Parse command line arguments
