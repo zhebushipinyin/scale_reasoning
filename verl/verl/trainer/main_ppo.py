@@ -19,7 +19,6 @@ from verl import DataProto
 import torch
 from verl.utils.reward_score import gsm8k, math
 from verl.trainer.ppo.ray_trainer import RayPPOTrainer
-import logging
 
 from deepscaler.rewards.math_reward import deepscaler_reward_fn
 
@@ -82,7 +81,7 @@ class RewardManager():
             
             if i == 0: 
                 #question = data_item.non_tensor_batch['prompts']
-                logging.info(f'Answer: {sequences_str}\nGround_truth: {ground_truth}\nScore: {score:.2f}\n')  
+                print(f'Answer: {sequences_str}\nGround_truth: {ground_truth}\nScore: {score:.2f}\n')  
             
             # with print_lock:
             #     if data_source not in already_print_data_sources:
