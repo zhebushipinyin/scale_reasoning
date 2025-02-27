@@ -66,5 +66,5 @@ python3 -m verl.trainer.main_ppo \
     trainer.save_freq=20 \
     trainer.test_freq=20 \
     trainer.default_hdfs_dir=null \
-    default_local_dir: checkpoints/${trainer.project_name}/${trainer.experiment_name}
-    trainer.total_epochs=5 "${@:1}"
+    default_local_dir: checkpoints/${trainer.project_name}/${trainer.experiment_name}\
+    trainer.total_epochs = 5 "${@:1}"
