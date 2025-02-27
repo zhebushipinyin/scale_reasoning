@@ -16,7 +16,6 @@ set -x
 # Warning: Export VLLM_ATTENTION_BACKEND on every machine before starting Ray cluster.
 # vLLM without XFORMERS will results in CUDA errors.
 export VLLM_ATTENTION_BACKEND=XFORMERS
-export WANDB_KEY="e8ca518fd730550b31286f1a38cdb74205791e64"
 export WANDB_API_KEY="e8ca518fd730550b31286f1a38cdb74205791e64"
 echo "job is starting on `hostname`"
 
@@ -38,13 +37,11 @@ if [ -z "$MODEL_PATH" ]; then
     MODEL_PATH="deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
 fi
 
-ray start --head
-
 # Train over a single node, 8 A100-80GB GPUs.
 python3 -m verl.trainer.main_ppo \
     algorithm.adv_estimator=grpo \
-    data.train_files=$HOME/deepscaler/data/train/train.parquet \
-    data.val_files=$HOME/deepscaler/data/test/test_aime.parquet \
+    data.train_files=$HOME/codes/scale_reasoning/deepscaler/data/train/train.parquet \
+    data.val_files=$HOME/codes/scale_reasoning/deepscaler/data/test/test_aime.parquet \
     data.train_batch_size=16 \
     data.val_batch_size=16 \
     data.max_prompt_length=512 \
