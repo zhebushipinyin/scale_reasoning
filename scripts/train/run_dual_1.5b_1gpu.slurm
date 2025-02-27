@@ -16,8 +16,8 @@ set -x
 # Warning: Export VLLM_ATTENTION_BACKEND on every machine before starting Ray cluster.
 # vLLM without XFORMERS will results in CUDA errors.
 export VLLM_ATTENTION_BACKEND=XFORMERS
-export WANDB_KEY="6b124c177e544ba80d64d929f34866ddf7d0b7ac"
-export WANDB_API_KEY="6b124c177e544ba80d64d929f34866ddf7d0b7ac"
+export WANDB_KEY="e8ca518fd730550b31286f1a38cdb74205791e64"
+export WANDB_API_KEY="e8ca518fd730550b31286f1a38cdb74205791e64"
 echo "job is starting on `hostname`"
 
 # Parse command line arguments
