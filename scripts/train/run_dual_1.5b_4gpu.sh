@@ -60,7 +60,7 @@ python3 -m verl.trainer.main_ppo \
     trainer.logger=['console','wandb'] \
     trainer.project_name='dual_rl' \
     trainer.experiment_name='dual_rl-1.5b' \
-    +trainer.val_before_train=True \
+    +trainer.val_before_train=False \
     trainer.n_gpus_per_node=4 \
     trainer.nnodes=1 \
     trainer.save_freq=20 \
