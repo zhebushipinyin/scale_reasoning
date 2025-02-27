@@ -81,7 +81,8 @@ class RewardManager():
             score = compute_score_fn(solution_str=sequences_str, ground_truth=ground_truth)
             
             if i == 0: 
-                logging.info(f'Question: {data_item.non_tensor_batch['prompt']['content']}\nAnswer: {sequences_str}\nGround_truth: {ground_truth}\nScore: {score:.2f}')  
+                question = data_item.non_tensor_batch['prompt']['content']
+                logging.info(f'Question: {question}\nAnswer: {sequences_str}\nGround_truth: {ground_truth}\nScore: {score:.2f}')  
             
             # with print_lock:
             #     if data_source not in already_print_data_sources:
