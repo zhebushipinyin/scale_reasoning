@@ -4,6 +4,7 @@ set -x
 # Warning: Export VLLM_ATTENTION_BACKEND on every machine before starting Ray cluster.
 # vLLM without XFORMERS will results in CUDA errors.
 export VLLM_ATTENTION_BACKEND=XFORMERS
+export WANDB_API_KEY="6b124c177e544ba80d64d929f34866ddf7d0b7ac"
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -25,11 +26,11 @@ fi
 
 # Train over a single node, 8 A100-80GB GPUs.
 python3 -m verl.trainer.main_ppo \
-    algorithm.adv_estimator=rloo \
+    algorithm.adv_estimator=grpo \
     data.train_files=$HOME/deepscaler/data/train/train.parquet \
     data.val_files=$HOME/deepscaler/data/test/test_aime.parquet \
-    data.train_batch_size=128 \
-    data.val_batch_size=128 \
+    data.train_batch_size=64 \
+    data.val_batch_size=256 \
     data.max_prompt_length=1024 \
     data.max_response_length=16384 \
     actor_rollout_ref.model.path=$MODEL_PATH  \
@@ -60,9 +61,10 @@ python3 -m verl.trainer.main_ppo \
     trainer.project_name='dual_rl' \
     trainer.experiment_name='dual_rl-1.5b' \
     +trainer.val_before_train=True \
-    trainer.n_gpus_per_node=2 \
+    trainer.n_gpus_per_node=4 \
     trainer.nnodes=1 \
     trainer.save_freq=20 \
     trainer.test_freq=20 \
     trainer.default_hdfs_dir=null \
-    trainer.total_epochs=15 "${@:1}"
+    default_local_dir: checkpoints/${trainer.project_name}/${trainer.experiment_name}
+    trainer.total_epochs=5 "${@:1}"
