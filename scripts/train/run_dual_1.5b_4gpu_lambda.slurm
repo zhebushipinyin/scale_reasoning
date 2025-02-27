@@ -6,7 +6,7 @@
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:4              # 单个节点使用 1 块 GPU 卡
 #SBATCH --cpus-per-task=64
-#SBATCH -t 60:00:00
+#SBATCH -t 40:00:00
 #SBATCH -e logs/slurm-%j.err
 #SBATCH -o logs/slurm-%j.out
 #SBATCH --qos=lv0b               # 作业使用的 QoS 为 lv0b
