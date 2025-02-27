@@ -43,12 +43,12 @@ ray start --head
 # Train over a single node, 8 A100-80GB GPUs.
 python3 -m verl.trainer.main_ppo \
     algorithm.adv_estimator=grpo \
-    data.train_files=deepscaler/data/train/train.parquet \
-    data.val_files=deepscaler/data/test/test_aime.parquet \
+    data.train_files=$HOME/deepscaler/data/train/train.parquet \
+    data.val_files=$HOME/deepscaler/data/test/test_aime.parquet \
     data.train_batch_size=16 \
     data.val_batch_size=16 \
     data.max_prompt_length=512 \
-    data.max_response_length=1024 \
+    data.max_response_length=2048 \
     actor_rollout_ref.model.path=$MODEL_PATH  \
     actor_rollout_ref.actor.optim.lr=1e-6 \
     actor_rollout_ref.model.use_remove_padding=True \
@@ -75,7 +75,7 @@ python3 -m verl.trainer.main_ppo \
     trainer.critic_warmup=0 \
     trainer.logger=['console','wandb'] \
     trainer.project_name='dual_rl' \
-    trainer.experiment_name='dual_rl-1.5b' \
+    trainer.experiment_name='dual_rl-1.5b-1gpu-test' \
     +trainer.val_before_train=True \
     trainer.n_gpus_per_node=1 \
     trainer.nnodes=1 \
