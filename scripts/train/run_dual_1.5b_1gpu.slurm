@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH -J rloo_1.5B_exp
+#SBATCH -J dual_1.5B_exp
 #SBATCH --mem=64g
 #SBATCH -p DGX                    # 作业提交的分区为 DGX
 #SBATCH --nodes=1
