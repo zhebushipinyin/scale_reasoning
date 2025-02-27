@@ -66,5 +66,4 @@ python3 -m verl.trainer.main_ppo \
     trainer.save_freq=20 \
     trainer.test_freq=20 \
     trainer.default_hdfs_dir=null \
-    default_local_dir=checkpoints/dual_rl/dual_rl-1.5b\
     trainer.total_epochs=5 "${@:1}"
