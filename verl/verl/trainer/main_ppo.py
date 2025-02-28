@@ -82,8 +82,10 @@ class RewardManager():
             score, is_correct = compute_score_fn(solution_str=sequences_str, ground_truth=ground_truth)
             
             if i == 0: 
+                print("\n" + "="*80)
                 question = self.tokenizer.decode(valid_prompt_ids)
-                print(f'Question: {question}\n Answer: {sequences_str}\nGround_truth: {ground_truth}\nScore: {score:.2f}\n')
+                print(f'[Question]: {question}\n[Answer]: {sequences_str}\n[Ground_truth]: {ground_truth}\n[Score]: {score:.2f}\n')
+                print("="*80 + "\n")
             
             # with print_lock:
             #     if data_source not in already_print_data_sources:
