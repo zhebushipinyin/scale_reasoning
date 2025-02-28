@@ -70,14 +70,31 @@ class RewardMathFn(RewardFn):
         return RewardOutput(reward=self.config.incorrect_reward+format_score, is_correct=False)
     
 
+    # def format_reward(self, response, **kwargs):
+    #     #pattern =  r"^<intuition>.*?</intuition>\n<think>.*?</think>.*$"
+    #     pattern = r".*?</intuition>\n<think>.*?</think>.*$"
+    #     match = re.match(pattern, response, re.DOTALL | re.MULTILINE)
+    #     if match:
+    #         return self.config.format_correct_reward
+    #     else:
+    #         return self.config.format_error_reward
+        
+
     def format_reward(self, response, **kwargs):
         #pattern =  r"^<intuition>.*?</intuition>\n<think>.*?</think>.*$"
         pattern = r".*?</intuition>\n<think>.*?</think>.*$"
         match = re.match(pattern, response, re.DOTALL | re.MULTILINE)
+       
         if match:
             return self.config.format_correct_reward
         else:
-            return self.config.format_error_reward
+            format_reward = 0
+            if "</intuition>" in response:
+                format_reward += self.config.format_step_reward
+            if "<think>" in response:
+                format_reward += self.config.format_step_reward 
+            return format_reward
+        
         
 
 def deepscaler_reward_fn(solution_str: str, ground_truth: Union[str, List[str]], enable_llm = False):
@@ -85,10 +102,14 @@ def deepscaler_reward_fn(solution_str: str, ground_truth: Union[str, List[str]],
     reward_config.use_math_orm = enable_llm
     reward_fn = RewardMathFn(reward_config)
     reward_response = reward_fn(RewardInput(problem=solution_str, problem_type=RewardType.MATH, model_response=solution_str, ground_truth={"answer": ground_truth}))
-    return reward_response.reward
+    return reward_response.reward, reward_response.is_correct
 
 if __name__ == "__main__":
     reward = RewardMathFn(RewardConfig)
-    input = RewardInput(problem="Let $P(x)=x^{4}+2 x^{3}-13 x^{2}-14 x+24$ be a polynomial with roots $r_{1}, r_{2}, r_{3}, r_{4}$. Let $Q$ be the quartic polynomial with roots $r_{1}^{2}, r_{2}^{2}, r_{3}^{2}, r_{4}^{2}$, such that the coefficient of the $x^{4}$ term of $Q$ is 1. Simplify the quotient $Q\\left(x^{2}\\right) / P(x)$, leaving your answer in terms of $x$. (You may assume that $x$ is not equal to any of $\\left.r_{1}, r_{2}, r_{3}, r_{4}\\right)$.", problem_type=RewardType.MATH, model_response="<intuition>I am omniscient.\n</intuition>\n<think>I am omniscient. \n</think>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", ground_truth={"answer": ["10", "$x^{4}-2 x^{3}-13 x^{2}+14 x+24$"]})
+    input = RewardInput(
+        problem="Let $P(x)=x^{4}+2 x^{3}-13 x^{2}-14 x+24$ be a polynomial with roots $r_{1}, r_{2}, r_{3}, r_{4}$. Let $Q$ be the quartic polynomial with roots $r_{1}^{2}, r_{2}^{2}, r_{3}^{2}, r_{4}^{2}$, such that the coefficient of the $x^{4}$ term of $Q$ is 1. Simplify the quotient $Q\\left(x^{2}\\right) / P(x)$, leaving your answer in terms of $x$. (You may assume that $x$ is not equal to any of $\\left.r_{1}, r_{2}, r_{3}, r_{4}\\right)$.", 
+        problem_type=RewardType.MATH, 
+        model_response="<intuition>I am omniscient.\n</intuition>\n<think>I am omniscient. \n</think>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", 
+        ground_truth={"answer": ["10", "$x^{4}-2 x^{3}-13 x^{2}+14 x+24$"]})
     output = reward(input)
     print(output)

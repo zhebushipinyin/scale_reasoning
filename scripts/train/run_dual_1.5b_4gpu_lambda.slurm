@@ -42,8 +42,8 @@ python3 -m verl.trainer.main_ppo \
     algorithm.adv_estimator=grpo \
     data.train_files=$HOME/codes/scale_reasoning/deepscaler/data/train/train.parquet \
     data.val_files=$HOME/codes/scale_reasoning/deepscaler/data/test/test_aime.parquet \
-    data.train_batch_size=64 \
-    data.val_batch_size=256 \
+    data.train_batch_size=32 \
+    data.val_batch_size=128 \
     data.max_prompt_length=1024 \
     data.max_response_length=16384 \
     actor_rollout_ref.model.path=$MODEL_PATH  \
@@ -62,9 +62,9 @@ python3 -m verl.trainer.main_ppo \
     actor_rollout_ref.actor.fsdp_config.optimizer_offload=False \
     actor_rollout_ref.rollout.tensor_model_parallel_size=1 \
     actor_rollout_ref.rollout.name=vllm \
-    actor_rollout_ref.rollout.temperature=0.6 \
+    actor_rollout_ref.rollout.temperature=1 \
     actor_rollout_ref.rollout.val_temperature=0.6 \
-    actor_rollout_ref.rollout.gpu_memory_utilization=0.85 \
+    actor_rollout_ref.rollout.gpu_memory_utilization=0.6 \
     actor_rollout_ref.rollout.n=8 \
     actor_rollout_ref.rollout.n_val=8 \
     actor_rollout_ref.ref.fsdp_config.param_offload=True \
@@ -72,11 +72,11 @@ python3 -m verl.trainer.main_ppo \
     trainer.critic_warmup=0 \
     trainer.logger=['console','wandb'] \
     trainer.project_name='dual_rl' \
-    trainer.experiment_name='dual_rl-1.5b' \
+    trainer.experiment_name='dual_rl-1.5b-4gpu-lambda' \
     +trainer.val_before_train=True \
     trainer.n_gpus_per_node=4 \
     trainer.nnodes=1 \
-    trainer.save_freq=20 \
-    trainer.test_freq=20 \
+    trainer.save_freq=50 \
+    trainer.test_freq=50 \
     trainer.default_hdfs_dir=null \
     trainer.total_epochs=5 "${@:1}"

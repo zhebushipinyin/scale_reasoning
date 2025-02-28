@@ -35,9 +35,10 @@ class RewardManager():
     """The reward manager.
     """
 
-    def __init__(self, tokenizer, num_examine) -> None:
+    def __init__(self, tokenizer, num_examine, func_type='train') -> None:
         self.tokenizer = tokenizer
         self.num_examine = num_examine  # the number of batches of decoded responses to print to the console
+        self.func_type = func_type
 
     def __call__(self, data: DataProto):
         """We will expand this function gradually based on the available datasets"""
@@ -78,7 +79,7 @@ class RewardManager():
             # select rm_score
             data_source = data_item.non_tensor_batch['data_source']
             compute_score_fn = _select_rm_score_fn(data_source)
-            score = compute_score_fn(solution_str=sequences_str, ground_truth=ground_truth)
+            score, is_correct = compute_score_fn(solution_str=sequences_str, ground_truth=ground_truth)
             
             if i == 0: 
                 question = self.tokenizer.decode(valid_prompt_ids)
@@ -91,7 +92,12 @@ class RewardManager():
             #     if already_print_data_sources[data_source] < self.num_examine:
             #         already_print_data_sources[data_source] += 1
             #         print(sequences_str)      
-            return i, score, valid_response_length
+            if self.func_type == 'train':
+                return i, score, valid_response_length
+            elif self.func_type == 'validation':
+                return i, is_correct, valid_response_length
+            else:
+                return i, score, valid_response_length
 
         # Process items in parallel using ThreadPoolExecutor
         with ThreadPoolExecutor(max_workers=96) as executor:
@@ -186,10 +192,10 @@ def main_task(config):
         role_worker_mapping[Role.RewardModel] = ray.remote(RewardModelWorker)
         mapping[Role.RewardModel] = global_pool_id
 
-    reward_fn = RewardManager(tokenizer=tokenizer, num_examine=0)
+    reward_fn = RewardManager(tokenizer=tokenizer, num_examine=0, func_type='train')
 
     # Note that we always use function-based RM for validation
-    val_reward_fn = RewardManager(tokenizer=tokenizer, num_examine=1)
+    val_reward_fn = RewardManager(tokenizer=tokenizer, num_examine=1, func_type='validation')
 
     resource_pool_manager = ResourcePoolManager(resource_pool_spec=resource_pool_spec, mapping=mapping)
 
