@@ -97,14 +97,37 @@ class RewardMathFn(RewardFn):
     #         if "<think>" in response:
     #             format_reward += self.config.format_step_reward 
     #         return format_reward
-        
+    # def format_reward(self, response, **kwargs):
+    #     #pattern =  r"^<intuition>.*?</intuition>\n<think>.*?</think>.*$"
+    #     pattern = r".*?</intuition>\n<think>.*?</think>.*$"
+    #     tags = {
+    #         'intuition_end': ('</intuition>', 1),
+    #         'think_start': ('<think>', 1),
+    #     }
+    #     format_reward = 0
+    #     counts = 0
+    #     for tag_name, (tag_str, expected_count) in tags.items():
+    #         count = response.count(tag_str)
+    #         if count == expected_count:
+    #             format_reward += self.config.format_step_reward
+    #             counts +=1
+    #     if counts == 2:
+    #         match = re.match(pattern, response, re.DOTALL | re.MULTILINE)
+    #         if match:
+    #             return self.config.format_correct_reward
+    #         else:
+    #             return format_reward
+    #     else:
+    #         return format_reward
 
     def format_reward(self, response, **kwargs):
         #pattern =  r"^<intuition>.*?</intuition>\n<think>.*?</think>.*$"
         pattern = r".*?</intuition>\n<think>.*?</think>.*$"
+        soft_pattern = r".*?</intuition>\s*<think>.*?</think>.*$"
         tags = {
             'intuition_end': ('</intuition>', 1),
             'think_start': ('<think>', 1),
+            'think_end': ('</think>', 1),
         }
         format_reward = 0
         counts = 0
@@ -113,10 +136,14 @@ class RewardMathFn(RewardFn):
             if count == expected_count:
                 format_reward += self.config.format_step_reward
                 counts +=1
-        if counts == 2:
-            match = re.match(pattern, response, re.DOTALL | re.MULTILINE)
-            if match:
-                return self.config.format_correct_reward
+        if counts == 3:
+            soft_match = re.match(soft_pattern, response, re.DOTALL | re.MULTILINE)
+            if soft_match:
+                match = re.match(pattern, response, re.DOTALL | re.MULTILINE)
+                if match:
+                    return self.config.format_correct_reward
+                else:
+                    return self.config.format_partial_correct_reward
             else:
                 return format_reward
         else:
@@ -137,6 +164,20 @@ if __name__ == "__main__":
         problem="Let $P(x)=x^{4}+2 x^{3}-13 x^{2}-14 x+24$ be a polynomial with roots $r_{1}, r_{2}, r_{3}, r_{4}$. Let $Q$ be the quartic polynomial with roots $r_{1}^{2}, r_{2}^{2}, r_{3}^{2}, r_{4}^{2}$, such that the coefficient of the $x^{4}$ term of $Q$ is 1. Simplify the quotient $Q\\left(x^{2}\\right) / P(x)$, leaving your answer in terms of $x$. (You may assume that $x$ is not equal to any of $\\left.r_{1}, r_{2}, r_{3}, r_{4}\\right)$.", 
         problem_type=RewardType.MATH, 
         model_response="<intuition>I am omniscient.\n</intuition>\n<think>I am omniscient. \n</think>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", 
+        ground_truth={"answer": ["10", "$x^{4}-2 x^{3}-13 x^{2}+14 x+24$"]})
+    output = reward(input)
+    print(output)
+    input = RewardInput(
+        problem="Let $P(x)=x^{4}+2 x^{3}-13 x^{2}-14 x+24$ be a polynomial with roots $r_{1}, r_{2}, r_{3}, r_{4}$. Let $Q$ be the quartic polynomial with roots $r_{1}^{2}, r_{2}^{2}, r_{3}^{2}, r_{4}^{2}$, such that the coefficient of the $x^{4}$ term of $Q$ is 1. Simplify the quotient $Q\\left(x^{2}\\right) / P(x)$, leaving your answer in terms of $x$. (You may assume that $x$ is not equal to any of $\\left.r_{1}, r_{2}, r_{3}, r_{4}\\right)$.", 
+        problem_type=RewardType.MATH, 
+        model_response="<intuition>I am omniscient.\n</intuition><think>I am omniscient. \n</think>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", 
+        ground_truth={"answer": ["10", "$x^{4}-2 x^{3}-13 x^{2}+14 x+24$"]})
+    output = reward(input)
+    print(output)
+    input = RewardInput(
+        problem="Let $P(x)=x^{4}+2 x^{3}-13 x^{2}-14 x+24$ be a polynomial with roots $r_{1}, r_{2}, r_{3}, r_{4}$. Let $Q$ be the quartic polynomial with roots $r_{1}^{2}, r_{2}^{2}, r_{3}^{2}, r_{4}^{2}$, such that the coefficient of the $x^{4}$ term of $Q$ is 1. Simplify the quotient $Q\\left(x^{2}\\right) / P(x)$, leaving your answer in terms of $x$. (You may assume that $x$ is not equal to any of $\\left.r_{1}, r_{2}, r_{3}, r_{4}\\right)$.", 
+        problem_type=RewardType.MATH, 
+        model_response="<intuition>I am omniscient.<think>I am omniscient. \n</think>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", 
         ground_truth={"answer": ["10", "$x^{4}-2 x^{3}-13 x^{2}+14 x+24$"]})
     output = reward(input)
     print(output)

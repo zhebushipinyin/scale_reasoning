@@ -16,8 +16,8 @@ class RewardConfig:
     incorrect_reward: float = 0
 
     format_correct_reward: float = 1.0
-    format_partial_correct_reward: float = 0.5
-    format_step_reward: float = 0.2
+    format_partial_correct_reward: float = 0.6
+    format_step_reward: float = 0.15
     format_error_reward: float = 0
     unk_error_reward: float = 0
 

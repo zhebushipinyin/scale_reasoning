@@ -59,7 +59,7 @@ python3 -m verl.trainer.main_ppo \
     trainer.critic_warmup=0 \
     trainer.logger=['console','wandb'] \
     trainer.project_name='dual_rl' \
-    trainer.experiment_name='dual_rl-1.5b-4gpu' \
+    trainer.experiment_name='dual_rl-1.5b-4gpu-soft-reward' \
     +trainer.val_before_train=True \
     trainer.n_gpus_per_node=4 \
     trainer.nnodes=1 \
