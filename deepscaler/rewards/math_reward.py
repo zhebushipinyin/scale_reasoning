@@ -65,8 +65,11 @@ class RewardMathFn(RewardFn):
         for ground_truth in processed_ground_truths:
             is_correct = grade_answer_mathd(model_answer, ground_truth) or grade_answer_sympy(model_answer, ground_truth)
             if is_correct:
-                return RewardOutput(reward=self.config.correct_reward+format_score, is_correct=True)
-                
+                if format_score >= self.config.format_correct_reward:
+                    return RewardOutput(reward=self.config.correct_reward+format_score, is_correct=True)
+                else:
+                    return RewardOutput(reward=self.config.incorrect_reward+format_score, is_correct=True)
+
         return RewardOutput(reward=self.config.incorrect_reward+format_score, is_correct=False)
     
 
@@ -80,19 +83,39 @@ class RewardMathFn(RewardFn):
     #         return self.config.format_error_reward
         
 
+    # def format_reward(self, response, **kwargs):
+    #     #pattern =  r"^<intuition>.*?</intuition>\n<think>.*?</think>.*$"
+    #     pattern = r".*?</intuition>\n<think>.*?</think>.*$"
+    #     match = re.match(pattern, response, re.DOTALL | re.MULTILINE)
+       
+    #     if match:
+    #         return self.config.format_correct_reward
+    #     else:
+    #         format_reward = 0
+    #         if "</intuition>" in response:
+    #             format_reward += self.config.format_step_reward
+    #         if "<think>" in response:
+    #             format_reward += self.config.format_step_reward 
+    #         return format_reward
+        
+
     def format_reward(self, response, **kwargs):
         #pattern =  r"^<intuition>.*?</intuition>\n<think>.*?</think>.*$"
         pattern = r".*?</intuition>\n<think>.*?</think>.*$"
+        tags = {
+            'intuition_end': ('</intuition>', 1),
+            'think_start': ('<think>', 1),
+        }
         match = re.match(pattern, response, re.DOTALL | re.MULTILINE)
        
         if match:
             return self.config.format_correct_reward
         else:
             format_reward = 0
-            if "</intuition>" in response:
-                format_reward += self.config.format_step_reward
-            if "<think>" in response:
-                format_reward += self.config.format_step_reward 
+            for tag_name, (tag_str, expected_count) in tags.items():
+                count = response.count(tag_str)
+                if count == expected_count:
+                    format_reward += self.config.format_step_reward
             return format_reward
         
         
