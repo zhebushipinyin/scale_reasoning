@@ -8,8 +8,8 @@ GEMINI_MODEL = "gemini-1.5-pro-002"
 OAI_RM_MODEL = "gpt-4o-mini"
 
 # Reward function constants
-THOUGHT_DELIMITER_START = "<think>"
-THOUGHT_DELIMITER_END = "</think>"
+THOUGHT_DELIMITER_START = "<reasoning>"
+THOUGHT_DELIMITER_END = "</reasoning>"
 
 INTUITION_DELIMITER_START = "<intuition>"
 INTUITION_DELIMITER_END = "</intuition>"
