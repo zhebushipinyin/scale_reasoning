@@ -106,16 +106,20 @@ class RewardMathFn(RewardFn):
             'intuition_end': ('</intuition>', 1),
             'think_start': ('<think>', 1),
         }
-        match = re.match(pattern, response, re.DOTALL | re.MULTILINE)
-       
-        if match:
-            return self.config.format_correct_reward
+        format_reward = 0
+        counts = 0
+        for tag_name, (tag_str, expected_count) in tags.items():
+            count = response.count(tag_str)
+            if count == expected_count:
+                format_reward += self.config.format_step_reward
+                counts +=1
+        if counts == 2:
+            match = re.match(pattern, response, re.DOTALL | re.MULTILINE)
+            if match:
+                return self.config.format_correct_reward
+            else:
+                return format_reward
         else:
-            format_reward = 0
-            for tag_name, (tag_str, expected_count) in tags.items():
-                count = response.count(tag_str)
-                if count == expected_count:
-                    format_reward += self.config.format_step_reward
             return format_reward
         
         
