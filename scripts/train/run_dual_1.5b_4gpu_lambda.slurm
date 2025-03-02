@@ -2,7 +2,7 @@
 
 #SBATCH -J dual_1.5B_exp
 #SBATCH --mem=256g
-#SBATCH -p DGX                    # 作业提交的分区为 DGX
+#SBATCH -p HGX                    # 作业提交的分区为 DGX
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:4              # 单个节点使用 1 块 GPU 卡
 #SBATCH --cpus-per-task=64
