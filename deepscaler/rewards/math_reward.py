@@ -122,12 +122,12 @@ class RewardMathFn(RewardFn):
 
     def format_reward(self, response, **kwargs):
         #pattern =  r"^<intuition>.*?</intuition>\n<think>.*?</think>.*$"
-        pattern = r".*?</intuition>\n<think>.*?</think>.*$"
-        soft_pattern = r".*?</intuition>\s*<think>.*?</think>.*$"
+        pattern = r".*?</intuition>\n<reasoning>.*?</reasoning>.*$"
+        soft_pattern = r".*?</intuition>\s*<reasoning>.*?</reasoning>.*$"
         tags = {
             'intuition_end': ('</intuition>', 1),
-            'think_start': ('<think>', 1),
-            'think_end': ('</think>', 1),
+            'think_start': ('<reasoning>', 1),
+            'think_end': ('</reasoning>', 1),
         }
         format_reward = 0
         counts = 0
@@ -163,21 +163,21 @@ if __name__ == "__main__":
     input = RewardInput(
         problem="Let $P(x)=x^{4}+2 x^{3}-13 x^{2}-14 x+24$ be a polynomial with roots $r_{1}, r_{2}, r_{3}, r_{4}$. Let $Q$ be the quartic polynomial with roots $r_{1}^{2}, r_{2}^{2}, r_{3}^{2}, r_{4}^{2}$, such that the coefficient of the $x^{4}$ term of $Q$ is 1. Simplify the quotient $Q\\left(x^{2}\\right) / P(x)$, leaving your answer in terms of $x$. (You may assume that $x$ is not equal to any of $\\left.r_{1}, r_{2}, r_{3}, r_{4}\\right)$.", 
         problem_type=RewardType.MATH, 
-        model_response="<intuition>I am omniscient.\n</intuition>\n<think>I am omniscient. \n</think>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", 
+        model_response="<intuition>I am omniscient.\n</intuition>\n<reasoning>I am omniscient. \n</reasoning>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", 
         ground_truth={"answer": ["10", "$x^{4}-2 x^{3}-13 x^{2}+14 x+24$"]})
     output = reward(input)
     print(output)
     input = RewardInput(
         problem="Let $P(x)=x^{4}+2 x^{3}-13 x^{2}-14 x+24$ be a polynomial with roots $r_{1}, r_{2}, r_{3}, r_{4}$. Let $Q$ be the quartic polynomial with roots $r_{1}^{2}, r_{2}^{2}, r_{3}^{2}, r_{4}^{2}$, such that the coefficient of the $x^{4}$ term of $Q$ is 1. Simplify the quotient $Q\\left(x^{2}\\right) / P(x)$, leaving your answer in terms of $x$. (You may assume that $x$ is not equal to any of $\\left.r_{1}, r_{2}, r_{3}, r_{4}\\right)$.", 
         problem_type=RewardType.MATH, 
-        model_response="<intuition>I am omniscient.\n</intuition><think>I am omniscient. \n</think>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", 
+        model_response="<intuition>I am omniscient.\n</intuition><reasoning>I am omniscient. \n</reasoning>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", 
         ground_truth={"answer": ["10", "$x^{4}-2 x^{3}-13 x^{2}+14 x+24$"]})
     output = reward(input)
     print(output)
     input = RewardInput(
         problem="Let $P(x)=x^{4}+2 x^{3}-13 x^{2}-14 x+24$ be a polynomial with roots $r_{1}, r_{2}, r_{3}, r_{4}$. Let $Q$ be the quartic polynomial with roots $r_{1}^{2}, r_{2}^{2}, r_{3}^{2}, r_{4}^{2}$, such that the coefficient of the $x^{4}$ term of $Q$ is 1. Simplify the quotient $Q\\left(x^{2}\\right) / P(x)$, leaving your answer in terms of $x$. (You may assume that $x$ is not equal to any of $\\left.r_{1}, r_{2}, r_{3}, r_{4}\\right)$.", 
         problem_type=RewardType.MATH, 
-        model_response="<intuition>I am omniscient.<think>I am omniscient. \n</think>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", 
+        model_response="<intuition>I am omniscient.<reasoning>I am omniscient. \n</think>The answer is \\boxed{24 + 14*x + (-13)*x^2 - 2*x^3 + x^4}.", 
         ground_truth={"answer": ["10", "$x^{4}-2 x^{3}-13 x^{2}+14 x+24$"]})
     output = reward(input)
     print(output)
