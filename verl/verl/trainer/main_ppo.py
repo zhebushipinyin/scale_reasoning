@@ -20,13 +20,15 @@ import torch
 from verl.utils.reward_score import gsm8k, math
 from verl.trainer.ppo.ray_trainer import RayPPOTrainer
 
-from deepscaler.rewards.math_reward import deepscaler_reward_fn
+from deepscaler.rewards.math_reward import deepscaler_reward_fn, hard_reward_fn
 
 def _select_rm_score_fn(data_source):
     if data_source == 'openai/gsm8k':
         return gsm8k.compute_score
     elif data_source == 'lighteval/MATH':
         return math.compute_score
+    elif data_source == 'MATH_Hard':
+        return hard_reward_fn
     else:
         return deepscaler_reward_fn
 
