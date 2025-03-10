@@ -180,7 +180,7 @@ class RewardMathFnHard(RewardFn):
         model_response = input.model_response
 
         format_score = self.format_reward(model_response)
-        print(model_response)
+        #print(model_response)
         answer_text = self.extract_answer_text(model_response)
         #print(answer_text)
         model_answer = extract_answer(answer_text)
